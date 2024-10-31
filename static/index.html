@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Test</title>
+    <style>
+        #speed-widget {
+            font-family: Arial, sans-serif;
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+            margin: 50px auto;
+        }
+        #speed {
+            font-size: 24px;
+            color: #4CAF50;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="speed-widget">
+        <h3>Speed Test</h3>
+        <p id="speed">Waiting for speed data...</p>
+    </div>
+
+    <script>
+        const ws = new WebSocket("wss://127.0.0.1:443/ws/");
+        // const ws = new WebSocket("wss://rusted.app:443/ws/");
+
+        ws.onmessage = function(event) {
+            document.getElementById('speed').innerText = event.data;
+        };
+
+        ws.onopen = function() {
+            console.log("Connected to WebSocket");
+        };
+
+        ws.onclose = function() {
+            console.log("Disconnected from WebSocket");
+        };
+    </script>
+</body>
+</html>
